@@ -5,7 +5,8 @@ use random_test_cli::{EDITOR_URL, browse, generate_sample_text};
 #[command(
     name = "rt",
     version,
-    about = "Generate random tests from cp-ast share links"
+    about = "Generate random tests from cp-ast share links",
+    arg_required_else_help = true
 )]
 struct Cli {
     #[command(subcommand)]
@@ -22,7 +23,7 @@ struct Cli {
 #[derive(Debug, Subcommand)]
 enum Command {
     /// Open the cp-ast editor in the default browser.
-    Browse,
+    Open,
 }
 
 fn main() {
@@ -34,7 +35,7 @@ fn main() {
 
 fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
     match cli.command {
-        Some(Command::Browse) => {
+        Some(Command::Open) => {
             browse::open_url(EDITOR_URL)?;
         }
         None => {

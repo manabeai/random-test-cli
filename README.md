@@ -5,9 +5,9 @@ from cp-ast-ecosystems share links.
 
 ```sh
 rt 'https://manabeai.github.io/cp-ast-ecosystems/?state=...'
-rt 'v2....' --seed 42
-rt browse
+rt '%7B%22schema_version%22%3A1%2C...%7D' --seed 42
+rt open
+rt state.txt
 ```
 
-The generator accepts both the current compressed `v2.` share state and legacy
-base64 state values.
+The generator accepts URL-encoded JSON `state` values.
