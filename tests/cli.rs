@@ -1,5 +1,4 @@
-use base64::Engine;
-use std::process::Command;
+use std::{fs, process::Command};
 
 fn minimal_scalar_json() -> &'static str {
     r#"{
@@ -26,15 +25,14 @@ fn minimal_scalar_json() -> &'static str {
     }"#
 }
 
-fn legacy_state() -> String {
-    urlencoding::encode(&base64::engine::general_purpose::STANDARD.encode(minimal_scalar_json()))
-        .into_owned()
+fn encoded_state() -> String {
+    urlencoding::encode(minimal_scalar_json()).into_owned()
 }
 
 #[test]
 fn same_seed_generates_same_output() {
     let bin = env!("CARGO_BIN_EXE_rt");
-    let state = legacy_state();
+    let state = encoded_state();
     let first = Command::new(bin)
         .arg(&state)
         .arg("--seed")
@@ -67,10 +65,30 @@ fn full_url_input_is_accepted() {
     let bin = env!("CARGO_BIN_EXE_rt");
     let url = format!(
         "https://manabeai.github.io/cp-ast-ecosystems/?state={}",
-        legacy_state()
+        encoded_state()
     );
     let output = Command::new(bin)
         .arg(url)
+        .arg("--seed")
+        .arg("1")
+        .output()
+        .expect("rt should run");
+
+    assert!(
+        output.status.success(),
+        "stderr: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    assert!(!output.stdout.is_empty());
+}
+
+#[test]
+fn input_file_is_accepted() {
+    let bin = env!("CARGO_BIN_EXE_rt");
+    let path = std::env::temp_dir().join("rt_state.txt");
+    fs::write(&path, encoded_state()).expect("state file should be written");
+    let output = Command::new(bin)
+        .arg(&path)
         .arg("--seed")
         .arg("1")
         .output()
