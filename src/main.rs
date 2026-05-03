@@ -1,4 +1,5 @@
-use clap::{Parser, Subcommand};
+use clap::{CommandFactory, Parser, Subcommand};
+use clap_complete::{Shell, generate};
 use random_test_cli::{EDITOR_URL, browse, generate_sample_text, update};
 
 #[derive(Debug, Parser)]
@@ -24,6 +25,11 @@ struct Cli {
 enum Command {
     /// Open the cp-ast editor in the default browser.
     Open,
+    /// Generate shell completion script.
+    Completions {
+        /// Shell to generate completions for.
+        shell: Shell,
+    },
     /// Check GitHub releases and replace rt with the latest cargo-dist install.
     Update,
 }
@@ -39,6 +45,10 @@ fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
     match cli.command {
         Some(Command::Open) => {
             browse::open_url(EDITOR_URL)?;
+        }
+        Some(Command::Completions { shell }) => {
+            let mut command = Cli::command();
+            generate(shell, &mut command, "rt", &mut std::io::stdout());
         }
         Some(Command::Update) => {
             update::update_from_github(

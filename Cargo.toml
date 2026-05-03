@@ -1,6 +1,6 @@
 [package]
 name = "random-test-cli"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2024"
 rust-version = "1.85"
 license = "MIT"
@@ -16,6 +16,7 @@ path = "src/main.rs"
 
 [dependencies]
 clap = { version = "4.5", features = ["derive"] }
+clap_complete = "4.5"
 cp-ast-core = "0.1.0"
 cp-ast-json = "0.1.1"
 rand = "0.8"

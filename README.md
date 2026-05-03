@@ -7,6 +7,9 @@ from cp-ast-ecosystems share links.
 rt 'https://manabeai.github.io/cp-ast-ecosystems/?state=...'
 rt 'H4sIA...' --seed 42
 rt open
+rt completions bash > ~/.local/share/bash-completion/completions/rt
+rt completions zsh > ~/.zfunc/_rt
+rt completions fish > ~/.config/fish/completions/rt.fish
 rt state.txt
 rt update
 ```
