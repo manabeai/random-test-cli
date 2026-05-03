@@ -8,6 +8,7 @@ rt 'https://manabeai.github.io/cp-ast-ecosystems/?state=...'
 rt 'H4sIA...' --seed 42
 rt open
 rt state.txt
+rt update
 ```
 
 The generator accepts compressed cp-ast share-link `state` values produced by

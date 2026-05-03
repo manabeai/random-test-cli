@@ -604,6 +604,7 @@ dependencies = [
  "cp-ast-core",
  "cp-ast-json",
  "rand",
+ "serde_json",
  "thiserror 1.0.69",
  "url",
  "webbrowser",

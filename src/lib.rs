@@ -1,5 +1,6 @@
 pub mod browse;
 pub mod link_state;
+pub mod update;
 
 use cp_ast_core::sample::{generate, sample_to_text};
 use std::path::Path;

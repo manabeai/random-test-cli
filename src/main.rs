@@ -1,5 +1,5 @@
 use clap::{Parser, Subcommand};
-use random_test_cli::{EDITOR_URL, browse, generate_sample_text};
+use random_test_cli::{EDITOR_URL, browse, generate_sample_text, update};
 
 #[derive(Debug, Parser)]
 #[command(
@@ -24,6 +24,8 @@ struct Cli {
 enum Command {
     /// Open the cp-ast editor in the default browser.
     Open,
+    /// Check GitHub releases and replace rt with the latest cargo-dist install.
+    Update,
 }
 
 fn main() {
@@ -37,6 +39,13 @@ fn run(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
     match cli.command {
         Some(Command::Open) => {
             browse::open_url(EDITOR_URL)?;
+        }
+        Some(Command::Update) => {
+            update::update_from_github(
+                env!("CARGO_PKG_REPOSITORY"),
+                env!("CARGO_PKG_NAME"),
+                env!("CARGO_PKG_VERSION"),
+            )?;
         }
         None => {
             let Some(input) = cli.link_or_state else {

@@ -101,3 +101,20 @@ fn input_file_is_accepted() {
     );
     assert!(!output.stdout.is_empty());
 }
+
+#[test]
+fn update_subcommand_is_listed_in_help() {
+    let bin = env!("CARGO_BIN_EXE_rt");
+    let output = Command::new(bin)
+        .arg("--help")
+        .output()
+        .expect("rt should run");
+
+    assert!(
+        output.status.success(),
+        "stderr: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert!(stdout.contains("update"));
+}
