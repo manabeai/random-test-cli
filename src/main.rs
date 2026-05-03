@@ -1,4 +1,4 @@
-use clap::{CommandFactory, Parser, Subcommand};
+use clap::{ArgAction, CommandFactory, Parser, Subcommand};
 use clap_complete::{Shell, generate};
 use random_test_cli::{EDITOR_URL, browse, generate_sample_text, update};
 
@@ -6,10 +6,15 @@ use random_test_cli::{EDITOR_URL, browse, generate_sample_text, update};
 #[command(
     name = "rt",
     version,
+    disable_version_flag = true,
     about = "Generate random tests from cp-ast share links",
     arg_required_else_help = true
 )]
 struct Cli {
+    /// Print version information.
+    #[arg(short = 'v', long = "version", action = ArgAction::Version, global = true)]
+    version: Option<bool>,
+
     #[command(subcommand)]
     command: Option<Command>,
 

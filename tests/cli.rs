@@ -118,3 +118,20 @@ fn update_subcommand_is_listed_in_help() {
     let stdout = String::from_utf8_lossy(&output.stdout);
     assert!(stdout.contains("update"));
 }
+
+#[test]
+fn short_version_flag_prints_version() {
+    let bin = env!("CARGO_BIN_EXE_rt");
+    let output = Command::new(bin)
+        .arg("-v")
+        .output()
+        .expect("rt should run");
+
+    assert!(
+        output.status.success(),
+        "stderr: {}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let stdout = String::from_utf8_lossy(&output.stdout);
+    assert_eq!(stdout.trim(), format!("rt {}", env!("CARGO_PKG_VERSION")));
+}
