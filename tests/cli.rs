@@ -26,7 +26,7 @@ fn minimal_scalar_json() -> &'static str {
 }
 
 fn encoded_state() -> String {
-    urlencoding::encode(minimal_scalar_json()).into_owned()
+    cp_ast_json::encode_share_state_json(minimal_scalar_json()).unwrap()
 }
 
 #[test]

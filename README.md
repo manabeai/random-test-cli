@@ -5,9 +5,10 @@ from cp-ast-ecosystems share links.
 
 ```sh
 rt 'https://manabeai.github.io/cp-ast-ecosystems/?state=...'
-rt '%7B%22schema_version%22%3A1%2C...%7D' --seed 42
+rt 'H4sIA...' --seed 42
 rt open
 rt state.txt
 ```
 
-The generator accepts URL-encoded JSON `state` values.
+The generator accepts compressed cp-ast share-link `state` values produced by
+the web editor's copy-link button.
